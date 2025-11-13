@@ -63,7 +63,7 @@ list.files(path)  # Cette fonction permet de lister le fichier fastq
 
 On commence par indiquer le dossier où sont stockés les fichiers FASTQ, puis on affiche son contenu afin de vérifier la présence des échantillons et des fichiers de référence.
 
-##Création des listes des fichiers Forward (fnFs) et Reverse (fnRs):
+## Création des listes des fichiers Forward (fnFs) et Reverse (fnRs):
 
 ```{r}
 # Forward and reverse fastq filenames have format: SAMPLENAME_R1_001.fastq and SAMPLENAME_R2_001.fastq
@@ -87,6 +87,9 @@ sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
 plotQualityProfile(fnFs[1:2])
 # Cette fonction permet de lire les deux fichiers forward, de calculer les scores de qualité par position de base et d'afficher un graphique montrant la qualité moyenne de chaque position sur les lectures.
 ```
+
+
+
 C’est un diagnostic visuel pour voir la qualité des bases (nucléotides) le long des lectures.
 
 Le fond gris représente la fréquence de chaque score de qualité à chaque position de la lecture
