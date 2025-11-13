@@ -88,6 +88,8 @@ plotQualityProfile(fnFs[1:2])
 # Cette fonction permet de lire les deux fichiers forward, de calculer les scores de qualité par position de base et d'afficher un graphique montrant la qualité moyenne de chaque position sur les lectures.
 ```
 
+![](unnamed-chunk-4-1.png)<!-- -->
+
 
 
 C’est un diagnostic visuel pour voir la qualité des bases (nucléotides) le long des lectures.
@@ -105,6 +107,7 @@ La ligne rouge signifie la proportion des lectures qui atteignent cette position
 ```{r}
 plotQualityProfile(fnRs[1:2])
 ```
+![](unnamed-chunk-6-1.png)<!-- -->
 Contrairement à la qualité des lectures forward, la qualité des lectures reverse sont beaucoup moindre. On observe une chute brutale de la qualité (en vert) ainsi que sa variation (en orange). Ce phénomène est normal avec Illumina et DADA2 à un algorithme assez robuste pour les séquences de moindre qualité en intégrant des informations de qualité dans son modèle d’erreur. Ici, bonne qualité de lecture reverse jusqu’à environ 160 pb
 
 ## Filtrer et Rogner
@@ -156,8 +159,10 @@ errR <- learnErrors(filtRs, multithread=TRUE) # Apprend un modèle statistique d
 
 ```{r}
 plotErrors(errF, nominalQ=TRUE)
-
 ```
+![](unnamed-chunk-12-1.png)<!-- -->
+
+
 -Les points correspondent aux taux d’erreurs observés
 -La ligne noire correspond au taux d’erreur estimé par l’algorithme
 -La ligne rouge correspond au taux d’erreur attendu selon le Q score (taux d’erreur théorique selon le Q score).
