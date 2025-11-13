@@ -160,7 +160,7 @@ errR <- learnErrors(filtRs, multithread=TRUE) # Apprend un modèle statistique d
 ```{r}
 plotErrors(errF, nominalQ=TRUE)
 ```
-![](unnamed-chunk-12-1.png)<!-- -->
+![](unnamed-chunk-11-1.png)<!-- -->
 
 
 -Les points correspondent aux taux d’erreurs observés
