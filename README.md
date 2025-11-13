@@ -108,6 +108,7 @@ La ligne rouge signifie la proportion des lectures qui atteignent cette position
 plotQualityProfile(fnRs[1:2])
 ```
 ![](unnamed-chunk-6-1.png)<!-- -->
+
 Contrairement à la qualité des lectures forward, la qualité des lectures reverse sont beaucoup moindre. On observe une chute brutale de la qualité (en vert) ainsi que sa variation (en orange). Ce phénomène est normal avec Illumina et DADA2 à un algorithme assez robuste pour les séquences de moindre qualité en intégrant des informations de qualité dans son modèle d’erreur. Ici, bonne qualité de lecture reverse jusqu’à environ 160 pb
 
 ## Filtrer et Rogner
