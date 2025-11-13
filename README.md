@@ -9,7 +9,7 @@ library(dada2); packageVersion("dada2") # importation de dada2
 ```{r}
 path <- "~/Analyse Article ADM/MiSeq_SOP" # CHANGE ME to the directory containing the fastq files after unzipping.
 list.files(path)  # Cette fonction permet de lister le fichier fastq
-```
+
  [1] "F3D0_S188_L001_R1_001.fastq"                          
  [2] "F3D0_S188_L001_R2_001.fastq"                          
  [3] "F3D1_S189_L001_R1_001.fastq"                          
@@ -60,7 +60,7 @@ list.files(path)  # Cette fonction permet de lister le fichier fastq
 [48] "silva_v138.2_assignSpecies.f
 [49] "stability.batch"                                      
 [50] "stability.files" 
-
+```
 On commence par indiquer le dossier où sont stockés les fichiers FASTQ, puis on affiche son contenu afin de vérifier la présence des échantillons et des fichiers de référence.
 
 ## Création des listes des fichiers Forward (fnFs) et Reverse (fnRs):
@@ -77,12 +77,12 @@ fnRs <- sort(list.files(path, pattern="_R2_001.fastq", full.names = TRUE)) #Mêm
 On Récupère les fichiers forward (R1) et reverse (R2)
 
 
-##Nom de chaque échantillon extrait du nom du fichier
+## Nom de chaque échantillon extrait du nom du fichier
 ```{r}
 sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
 ```
 
-##Visualisation
+## Visualisation
 ```{r}
 plotQualityProfile(fnFs[1:2])
 # Cette fonction permet de lire les deux fichiers forward, de calculer les scores de qualité par position de base et d'afficher un graphique montrant la qualité moyenne de chaque position sur les lectures.
@@ -107,7 +107,7 @@ plotQualityProfile(fnRs[1:2])
 ```
 Contrairement à la qualité des lectures forward, la qualité des lectures reverse sont beaucoup moindre. On observe une chute brutale de la qualité (en vert) ainsi que sa variation (en orange). Ce phénomène est normal avec Illumina et DADA2 à un algorithme assez robuste pour les séquences de moindre qualité en intégrant des informations de qualité dans son modèle d’erreur. Ici, bonne qualité de lecture reverse jusqu’à environ 160 pb
 
-##Filtrer et Rogner
+## Filtrer et Rogner
 
 ```{r}
 # Place filtered files in filtered/ subdirectory
@@ -152,7 +152,7 @@ errR <- learnErrors(filtRs, multithread=TRUE) # Apprend un modèle statistique d
 22342720 total bases in 139642 reads from 20 samples will be used for learning the error rates.
 ```
 
-##Visualisation des taux d’erreur
+## Visualisation des taux d’erreur
 
 ```{r}
 plotErrors(errF, nominalQ=TRUE)
@@ -163,7 +163,7 @@ plotErrors(errF, nominalQ=TRUE)
 -La ligne rouge correspond au taux d’erreur attendu selon le Q score (taux d’erreur théorique selon le Q score).
 On observe bien que les points suivent bien la ligne noire et que par conséquent, les taux d’erreurs observés sont partiquement égaux aux taux d’erreur estimé. De plus, on observe bien une diminution du taux d’erreur plus le Q score augmente qui tend à suivre la ligne rouge.
 
-##Application de l’algo de DADA2
+## Application de l’algo de DADA2
 
 ```{r}
 dadaFs <- dada(filtFs, # Fichiers forward filtrés
@@ -220,7 +220,7 @@ Sample 19 - 6504 reads in 1502 unique sequences.
 Sample 20 - 4314 reads in 732 unique sequences.
 ```
 
-##Inspection
+## Inspection
 
 ```{r}
 dadaFs[[1]]
@@ -230,7 +230,7 @@ Key parameters: OMEGA_A = 1e-40, OMEGA_C = 1e-40, BAND_SIZE = 16
 ```
 Pour le 1er échantillon, l’algorithme à identifier 128 vrais variants dans 1979 séquences.
 
-##Fusion des lectures appariées
+## Fusion des lectures appariées
 
 ```{r}
 # Reconstruction des séquences complètes des amplicons
@@ -269,7 +269,7 @@ head(mergers[[1]])
 ```
 Permet d’observer les vraies séquences les plus abondantes dans l’échantillon. Les colonnes “nmismatch” (nombre de bases différentes dans la zone de chevauchement) et “nindel” (insertion ou délétions observées) permettent de voir si la fusion est cleen.
 
-##Construction d’une table de séquence
+## Construction d’une table de séquence
 
 ```{r}
 seqtab <- makeSequenceTable(mergers)
@@ -282,7 +282,7 @@ Colonnes : ASVs
 Valeurs : Abondance des séquences
 La commande “dim()” permet de retourner la matrice de longueur 2. Ici, le 1er chiffre correspond au nombre d’échantillon (20) et le 2ème chiffre au nombre d’ASV (293).
 
-##Inspection de la distribution des longueurs des séquences
+## Inspection de la distribution des longueurs des séquences
 
 ```{r}
 # Inspect distribution of sequence lengths
@@ -303,7 +303,7 @@ Ici, on oberve que :
 
 2 de 255 nucléotides
 
-##Supprimer les chimères
+## Supprimer les chimères
 
 ```{r}
 seqtab.nochim <- removeBimeraDenovo(seqtab, method="consensus", multithread=TRUE, verbose=TRUE) # affiche un résumé
@@ -313,7 +313,7 @@ Identified 61 bimeras out of 293 input sequences.
 ```
 Ici, 61 séquences sur les 293 ont été identifié comme des chimères
 
-##Proportion de lecture “survivante” au filtrage de chimères
+## Proportion de lecture “survivante” au filtrage de chimères
 
 ```{r}
 sum(seqtab.nochim)/sum(seqtab)
@@ -321,7 +321,7 @@ sum(seqtab.nochim)/sum(seqtab)
 ```
 On observe que 96 % des lectures ont été conservé et que 4% sont des chimères.
 
-##Suivre les lectures à travers la pipeline
+## Suivre les lectures à travers la pipeline
 
 ```{r}
 getN <- function(x) sum(getUniques(x)) #Nombre de lectures uniques conservées pour 1 échantillon
@@ -345,7 +345,7 @@ F3D144  4827     4312      4151      4228   3646    3507
 ```
 Cela permet une visualisation et traçabilité complète du pipeline DADA2. Il montre combien de lectures ont garde/perds à chaque étape et par échantillon. Normalement, on observe une petite perte à chaque étape ce qui est normal
 
-##Attribution d’une taxonomie
+## Attribution d’une taxonomie
 
 ```{r}
 taxa <- assignTaxonomy(seqtab.nochim, "~/Analyse Article ADM/MiSeq_SOP/silva_nr99_v138.2_toGenus_trainset.fa.gz?download=1", multithread=TRUE)
@@ -353,7 +353,7 @@ taxa <- assignTaxonomy(seqtab.nochim, "~/Analyse Article ADM/MiSeq_SOP/silva_nr9
 ```{r}
 taxa <- addSpecies(taxa, "~/Analyse Article ADM/MiSeq_SOP/silva_v138.2_assignSpecies.fa.gz?download=1")
 ```
-##Examination des attributions
+## Examination des attributions
 
 ```{r}
 taxa.print <- taxa # Copie l'objet "taxa" pour l'affichage
@@ -376,7 +376,7 @@ head(taxa.print) # Affiche les 6 premières lignes
 ```
 Les Bacteroidota sont très bien représentés parmi les taxons les plus abondants.
 
-##Evaluation de la précision (échantillon de contrôle “Mock”)
+## Evaluation de la précision (échantillon de contrôle “Mock”)
 
 ```{r}
 library(DECIPHER); packageVersion("DECIPHER")
@@ -408,7 +408,7 @@ DADA2 inferred 20 sample sequences present in the Mock community.
 ```
 Permet de vérifier la précision et la sensibilité de DADA2 sur le contrôle “Mock” connu. Ici, DADA2 a identifié 20 séquences d’échantillon présentes dans la communauté Mock.
 
-##Vérification des séquences détectées dans Mock
+## Vérification des séquences détectées dans Mock
 
 ```{r}
 # Extrait toutes les séquences d'ADN présentes dans le fichier "FASTA" de référence
