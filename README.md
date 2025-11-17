@@ -1,11 +1,12 @@
 # Antoine.code
 
+## Installation/Activation du package “DADA2”
 ```{r}
 library(dada2); packageVersion("dada2") # importation de dada2
 ```
 
 
-
+## Chargement du package de données à traiter
 ```{r}
 path <- "~/Analyse Article ADM/MiSeq_SOP" # CHANGE ME to the directory containing the fastq files after unzipping.
 list.files(path)  # Cette fonction permet de lister le fichier fastq
@@ -255,7 +256,14 @@ head(mergers[[1]])
 10528 paired-reads (in 120 unique pairings) successfully merged out of 11165 (in 278 pairings) input.
 11154 paired-reads (in 137 unique pairings) successfully merged out of 11797 (in 298 pairings) input.
 4349 paired-reads (in 85 unique pairings) successfully merged out of 4802 (in 179 pairings) input
-
+ 17431 paired-reads (in 153 unique pairings) successfully merged out of 17812 (in 272 pairings) input.
+ 5850 paired-reads (in 81 unique pairings) successfully merged out of 6095 (in 159 pairings) input.
+ 3716 paired-reads (in 86 unique pairings) successfully merged out of 3894 (in 147 pairings) input.
+ 6865 paired-reads (in 99 unique pairings) successfully merged out of 7191 (in 187 pairings) input.
+ 4426 paired-reads (in 67 unique pairings) successfully merged out of 4603 (in 127 pairings) input.
+ 4576 paired-reads (in 101 unique pairings) successfully merged out of 4739 (in 174 pairings) input.
+ 6092 paired-reads (in 109 unique pairings) successfully merged out of 6315 (in 173 pairings) input.
+ 4269 paired-reads (in 20 unique pairings) successfully merged out of 4281 (in 28 pairings) input.
 ```{r}
 head(mergers[[1]])
 ##                                                                                                                                                                                                                                                       sequence
